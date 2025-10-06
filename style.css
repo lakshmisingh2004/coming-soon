@@ -1,0 +1,77 @@
+/* Black & White Clean Design */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #fff; /* White border */
+    border-radius: 10px;
+  }
+  
+  h1 {
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+  
+  #timer {
+    font-size: 18px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  
+  input {
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #fff;
+    background: #000;
+    color: #fff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    outline: none;
+  }
+  
+  input::placeholder {
+    color: #888;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background: #ccc;
+  }
+  
+  #savedMessage {
+    color: #0f0;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  
