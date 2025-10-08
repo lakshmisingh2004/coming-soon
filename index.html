@@ -4,10 +4,107 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coming Soon</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Dark overlay to make text readable */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #fff;
+      border-radius: 0;
+      position: relative;
+      z-index: 2;
+      background-color: transparent;
+    }
+
+    h1 {
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    #timer {
+      font-size: 18px;
+      margin-bottom: 25px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #fff;
+      background: #fff;
+      color: #fff;
+      border-radius: 0;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #888;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #fff;
+      color: #888;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ccc;
+    }
+
+    #savedMessage {
+      color: #0f0;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
+    <img src="logo.png" alt="Logo" class="logo">
     <h1>COMING SOON</h1>
     <p>Our website is launching soon. Stay tuned!</p>
 
@@ -18,16 +115,52 @@
       <span id="minutes">00</span>m :
       <span id="seconds">00</span>s
     </div>
-
-    <form id="notifyForm">
-      <input type="email" id="email" placeholder="Enter your email" required>
-      <button type="submit">Notify Me</button>
-    </form>
-
-    <p id="savedMessage"></p>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // ------------------ Countdown Timer ------------------
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    // Check if launch date already saved in localStorage
+    let launchDate = localStorage.getItem("launchDate");
+
+    if (!launchDate) {
+      // Set new launch date = 7 days from now
+      const newDate = new Date();
+      newDate.setDate(newDate.getDate() + 7);
+      launchDate = newDate.getTime();
+      localStorage.setItem("launchDate", launchDate);
+    } else {
+      // Convert back to number (timestamp)
+      launchDate = parseInt(launchDate, 10);
+    }
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("timer").innerHTML = "We're Live!";
+        clearInterval(timerInterval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      daysEl.textContent = String(days).padStart(2, "0");
+      hoursEl.textContent = String(hours).padStart(2, "0");
+      minutesEl.textContent = String(minutes).padStart(2, "0");
+      secondsEl.textContent = String(seconds).padStart(2, "0");
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
 </body>
 </html>
-
